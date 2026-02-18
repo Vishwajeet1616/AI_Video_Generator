@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Highlight Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🎮 AI Gameplay Highlight Generator</h1>
+    <p>Upload your gameplay video and automatically generate fight + reaction highlights.</p>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="video" accept="video/*" required>
+        <button type="submit">Generate Highlights</button>
+    </form>
+</div>
+
+</body>
+</html>

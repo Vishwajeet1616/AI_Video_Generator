@@ -1,42 +1,126 @@
+:root {
+    --primary: #ff4757;
+    --primary-glow: rgba(255, 71, 87, 0.4);
+    --bg-dark: #0f0c29;
+    --text-main: #ffffff;
+    --text-dim: #a0a0a0;
+}
+
+* { box-sizing: border-box; }
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #1e1e2f, #252542);
-    color: white;
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at center, #1e1e3f, #0f0c29);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
     text-align: center;
 }
 
-.container {
-    margin-top: 100px;
-}
+h1 { font-size: 28px; margin-bottom: 10px; font-weight: 700; letter-spacing: -0.5px; }
+.highlight { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
+.subtitle { font-size: 15px; color: var(--text-dim); margin-bottom: 30px; line-height: 1.5; }
 
-h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-}
+/* File Upload Styling */
+.file-input-wrapper { margin-bottom: 25px; }
+input[type="file"] { display: none; }
 
-p {
-    font-size: 18px;
-    margin-bottom: 30px;
-}
-
-input[type="file"] {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-}
-
-button {
-    padding: 12px 25px;
-    background-color: #ff4757;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    color: white;
+.custom-file-upload {
+    display: block;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 12px;
     cursor: pointer;
-    margin-left: 10px;
+    transition: all 0.3s ease;
+    color: var(--text-dim);
 }
 
-button:hover {
-    background-color: #ff6b81;
+.custom-file-upload:hover {
+    border-color: var(--primary);
+    background: rgba(255, 71, 87, 0.05);
+    color: white;
 }
+
+.file-selected {
+    border: 2px solid var(--primary);
+    color: white;
+    background: rgba(255, 71, 87, 0.1);
+}
+
+/* Buttons */
+.glow-button {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--primary-glow);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.glow-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--primary-glow);
+}
+
+.button-group { display: flex; gap: 10px; margin-top: 20px; }
+.btn-secondary {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+/* Loading State */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.1);
+    border-top: 6px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 30px auto;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.loading-title { margin-bottom: 5px; color: var(--primary); }
+.loading-text { font-size: 13px; color: var(--text-dim); }
+
+/* Video Result */
+.video-wrapper {
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--primary);
+    background: black;
+}
+
+.success-text { color: #2ecc71; font-size: 20px; margin-bottom: 10px; }

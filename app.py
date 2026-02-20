@@ -124,7 +124,16 @@ def upload_video():
     if output_path is None:
         return "No highlights detected. Try lowering ML_CONFIDENCE."
 
-    return send_file(output_path, as_attachment=True)
+    # Get just the filename from the path
+    filename = os.path.basename(output_path)
+    
+    # Redirect to the home page but with the video filename as a variable
+    return render_template("index.html", video_file=filename)
+
+# Add this new route to handle the actual file serving
+@app.route('/outputs/<filename>')
+def download_file(filename):
+    return send_file(os.path.join(OUTPUT_FOLDER, filename))
 
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False)

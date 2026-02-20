@@ -1,20 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Highlight Generator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
-    <h1>🎮 AI Gameplay Highlight Generator</h1>
-    <p>Upload your gameplay video and automatically generate fight + reaction highlights.</p>
+    <div class="glass-card">
+        <h1>🎮 <span class="highlight">AI</span> Gameplay Highlighter</h1>
 
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="video" accept="video/*" required>
-        <button type="submit">Generate Highlights</button>
-    </form>
+        {% if video_file %}
+            <div class="result-area">
+                <h2 class="success-text">✨ Highlight Reel Ready!</h2>
+                
+                <div class="video-wrapper">
+                    <video width="100%" controls class="video-preview">
+                        <source src="{{ url_for('download_file', filename=video_file) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <div class="button-group">
+                    <a href="{{ url_for('download_file', filename=video_file) }}" download class="glow-button small">
+                        📥 Download MP4
+                    </a>
+                    <a href="/" class="btn-secondary">
+                        🔄 Process Another
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <p class="subtitle">Upload your stream. Our Neural Network will find the best combat and reaction moments.</p>
+
+            <form action="/upload" method="post" enctype="multipart/form-data" id="upload-form" onsubmit="showLoading()">
+                <div class="file-input-wrapper">
+                    <input type="file" name="video" accept="video/*" required id="file-upload" onchange="updateFileName()">
+                    <label for="file-upload" class="custom-file-upload" id="file-label">
+                        📁 Choose Video File
+                    </label>
+                </div>
+                <button type="submit" class="glow-button">Generate Highlights</button>
+            </form>
+
+            <div id="loading-area" style="display:none;">
+                <div class="spinner"></div>
+                <h3 class="loading-title">AI is Listening...</h3>
+                <p class="loading-text">
+                    Analyzing audio frequencies for gunshots, explosions, and reactions.<br>
+                    This may take a few minutes depending on video length.
+                </p>
+            </div>
+        {% endif %}
+    </div>
 </div>
+
+<script>
+    // Switches from Form to Spinner
+    function showLoading() {
+        document.getElementById('upload-form').style.display = 'none';
+        document.querySelector('.subtitle').style.display = 'none';
+        document.getElementById('loading-area').style.display = 'block';
+    }
+
+    // Updates the label text when a file is selected
+    function updateFileName() {
+        const input = document.getElementById('file-upload');
+        const label = document.getElementById('file-label');
+        if (input.files.length > 0) {
+            label.innerText = "Selected: " + input.files[0].name;
+            label.classList.add('file-selected');
+        }
+    }
+</script>
 
 </body>
 </html>
